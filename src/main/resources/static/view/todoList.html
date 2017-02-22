@@ -1,0 +1,73 @@
+<div>
+    <div id="content">
+        <div class="well" id="adicionarTasks">
+            <form ng-submit="addTodoList()">
+                <div class="row">
+                    <div class="col-md-9">
+                        <input type="text" ng-model="todoListInput" class="form-control"
+                               placeholder="Digite o nome da lista de tarefas">
+                    </div>
+                    <div class="col-md-3">
+                        <input class="btn btn-primary bnt-block" type="submit" value="Adicionar"
+                               ng-disabled="!todoListInput">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="sidebar-nav" id="content">
+        <ul class="list-group nav scrollable">
+            <li class="list-group-item" ng-repeat="todoList in todoLists">
+                {{todoList.title}}
+                <div class="pull-right">
+                    <a data-toggle="tooltip" data-placement="top" title="Excluir"
+                       ng-click="deleteTodoList(todoList)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </div>
+                <div class="pull-right" style="margin-right: 12px">
+                    <a data-toggle="tooltip" data-placement="top" title="Editar"
+                       ng-click="updateTodoList(todoList)">
+                        <span data-toggle="modal" data-target="#editionModal" class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </div>
+                <div class="pull-right" style="margin-right: 15px">
+                    <a data-toggle="tooltip" data-placement="top" title="Abrir"
+                       ui-sref="task({todoListId:todoList.id})">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <input class="btn btn-danger btn-block" type="submit" value="Remover Todas" ng-disabled="todoLists.length == 0"
+               ng-click="removeAll()">
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="editionModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Editar Lista de Tarefas</h4>
+                </div>
+                <div class="modal-body">
+                    <form ng-submit="editTodoList()">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input type="text" class="form-control"
+                                       placeholder="Digite o nome da lista de tarefas" ng-model="todoListInput">
+                            </div>
+                            <div class="col-md-3">
+                                <input class="btn btn-primary bnt-block" type="submit" value="Salvar"
+                                       ng-disabled="!todoListInput" ng-click="editTodoList()">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

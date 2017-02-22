@@ -1,0 +1,70 @@
+<div>
+    <div id="content">
+        <h2>
+            Categorias
+        </h2>
+        <div class="well" id="adicionarTasks">
+            <form ng-submit="addCategory()">
+                <div class="row">
+                    <div class="col-md-9">
+                        <input type="text" ng-model="categoryInput" class="form-control"
+                               placeholder="Digite o nome da categoria">
+                    </div>
+                    <div class="col-md-3">
+                        <input class="btn btn-primary bnt-block" type="submit" value="Adicionar"
+                               ng-disabled="!categoryInput">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="sidebar-nav" id="content">
+        <ul class="list-group nav scrollable">
+            <li class="list-group-item" ng-repeat="category in allCategories">
+                {{category.title}}
+                <div class="pull-right">
+                    <a data-toggle="tooltip" data-placement="top" title="Excluir"
+                       ng-click="deleteCategory(category)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </div>
+                <div class="pull-right" style="margin-right: 12px">
+                    <a data-toggle="tooltip" data-placement="top" title="Editar"
+                       ng-click="updateCategory(category)">
+                        <span data-toggle="modal" data-target="#editionModal" class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <input class="btn btn-danger btn-block" type="submit" value="Remover Todas" ng-disabled="allCategories.length == 0"
+               ng-click="removeAll()">
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="editionModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Editar Categoria</h4>
+                </div>
+                <div class="modal-body">
+                    <form ng-submit="editCategory()">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input type="text" class="form-control"
+                                       placeholder="Digite o novo nome da categoria" ng-model="categoryInput">
+                            </div>
+                            <div class="col-md-3">
+                                <input class="btn btn-primary bnt-block" type="submit" value="Salvar"
+                                       ng-disabled="!categoryInput">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

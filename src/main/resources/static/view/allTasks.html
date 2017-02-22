@@ -1,0 +1,40 @@
+<div>
+    <div id="content">
+        <h2>Total de tarefas a cumprir: {{ (allTasks | filter: {completed:false}).length }}<h2>
+    </div>
+    <div id="content">
+        <label style="color:white">Pesquisa:</label>
+        <input type="text" ng-model="search">
+    </div>
+    <div id="content">
+        <div class="form-group">
+            <div class="form-group">
+                <select class="form-control" id="order" ng-model="order">
+                    <option value="" disabled selected>Ordenar por</option>
+                    <option value="title">Título</option>
+                    <option value="taskCategory.title">Categoria</option>
+                    <option value="taskPriority">Prioridade</option>
+                    <option value="completed">Tarefa finalizada</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0"
+                     aria-valuemax="100" ng-style="{ 'width': getPercentage() + '%' } ">
+                    {{ getPercentage() | number:2 }}%
+                </div>
+            </div>
+        </div>
+        <ul class="list-group nav scrollable">
+            <li class="list-group-item" ng-repeat="task in allTasks | filter: search | orderBy: order">
+                <span class="isDone-{{task.completed}}">{{task.title}}</span>
+                <div class="pull-right" style="padding-left: 5px">
+                    <span class='label label-success label-{{getColor(task)}}'>{{task.taskPriority}}</span>
+                </div>
+                <div class="pull-right">
+                    <span class='label label-default'>{{task.taskCategory.title}}</span>
+                </div>
+            </li>
+        </ul>
+    </div>

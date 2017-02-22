@@ -1,0 +1,231 @@
+<div>
+    <div id="content">
+        <h2>
+            {{todoList}}
+        </h2>
+        <div class="well" id="adicionarTasks">
+            <form ng-submit="">
+                <div class="row">
+                    <div class="col-md-9">
+                        <input type="text" ng-model="taskInput" class="form-control"
+                               placeholder="Digite o nome da nova tarefa">
+                    </div>
+                    <div class="col-md-3">
+                        <input class="btn btn-primary bnt-block" type="submit" value="Adicionar"
+                               ng-disabled="!taskInput" data-toggle="modal" data-target="#newTaskModal">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="sidebar-nav" id="content">
+        <ul class="list-group nav scrollable">
+            <li class="list-group-item" ng-repeat="task in tasks track by $index">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="task.completed" ng-click="completedTask(task)"/>
+                        <span class="isDone-{{task.completed}}">{{task.title}}</span>
+                    </label>
+                    <div class="pull-right">
+                        <a data-toggle="tooltip" data-placement="top" title="Excluir" ng-click="deleteTask(task)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </div>
+                    <div class="pull-right" style="margin-right: 12px">
+                        <a data-toggle="tooltip" data-placement="top" title="Editar" ng-click="updateTask(task)">
+                            <span data-toggle="modal" data-target="#editTaskModal"
+                                  class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </div>
+                    <div class="pull-right" style="margin-right: 15px">
+                        <a data-toggle="tooltip" data-placement="top" title="Subtarefas" ng-click="setTask(task)">
+                            <span data-toggle="modal" data-target="#subTaskModal"
+                                  class="glyphicon glyphicon-list"></span>
+                        </a>
+                    </div>
+                    <div class="pull-right" style="margin-right: 18px">
+                        <span class='label label-success label-{{getColor(task)}}'>{{task.taskPriority}}</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Modal new task -->
+    <div class="modal fade" id="newTaskModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Nova Tarefa</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-group">
+                            <label for="task">Título da Tarefa</label>
+                            <input type="text" class="form-control" id="task" ng-model="taskInput"
+                                   placeholder="Digite o nome da tarefa">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Descrição</label>
+                            <input type="text" class="form-control" id="description" ng-model="descriptionInput"
+                                   placeholder="Informe uma descrição">
+                        </div>
+                        <div class="form-group">
+                            <label for="cat">Categoria</label>
+                            <select class="form-control" id="cat" ng-model="taskCategoryId">
+                                <option value="" disabled selected>Selecione a categoria</option>
+                                <option ng-repeat="category in allCategories" value="{{category.id}}">{{category.title}}
+                                </option>
+                            </select>
+                        </div>
+                        <button type="button" data-toggle="modal" data-target="#newCategoryModal"
+                                class="btn btn-info btn-block" style="margin-bottom: 10px">Criar categoria
+                        </button>
+                        <div class="form-group">
+                            <label>Prioridade</label>
+                            <div class="btn-group btn-group-justified">
+                                <a class="btn btn-success" ng-click="setPriority('LOW')">Baixa</a>
+                                <a class="btn btn-warning" ng-click="setPriority('MIDDLE')">Média</a>
+                                <a class="btn btn-danger" ng-click="setPriority('HIGH')">Alta</a>
+                            </div>
+                        </div>
+                        <br>
+                        <input class="btn btn-primary btn-block" type="submit" value="Salvar Tarefa"
+                               data-dismiss="modal" ng-click="addTask()" ng-disabled="(!taskInput || !taskCategoryId)">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal edit task -->
+    <div class="modal fade" id="editTaskModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="cleanFields()">&times;</button>
+                    <h4 class="modal-title">Editar Tarefa</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="form-group">
+                            <label for="task2">Título da Tarefa</label>
+                            <input type="text" class="form-control" id="task2" ng-model="taskInput"
+                                   placeholder="Digite o nome da tarefa">
+                        </div>
+                        <div class="form-group">
+                            <label for="description2">Descrição</label>
+                            <input type="text" class="form-control" id="description2" ng-model="descriptionInput"
+                                   placeholder="Informe uma descrição">
+                        </div>
+                        <div class="form-group">
+                            <label for="cat2">Categoria</label>
+                            <select class="form-control" id="cat2" ng-model="taskCategoryId">
+                                <option ng-repeat="category in allCategories" value="{{category.id}}">{{category.title}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Prioridade</label>
+                            <div class="btn-group btn-group-justified">
+                                <a class="btn btn-success" ng-click="setPriority('LOW')">Baixa</a>
+                                <a class="btn btn-warning" ng-click="setPriority('MIDDLE')">Média</a>
+                                <a class="btn btn-danger" ng-click="setPriority('HIGH')">Alta</a>
+                            </div>
+                        </div>
+                        <br>
+                        <input class="btn btn-primary btn-block" type="submit" value="Salvar Tarefa"
+                               data-dismiss="modal" ng-click="editTask()" ng-disabled="!taskInput">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cleanFields()">Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal category-->
+    <div class="modal fade" id="newCategoryModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Criar categoria</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input type="text" ng-model="categoryInput" class="form-control"
+                                       placeholder="Digite o nome da nova categoria">
+                            </div>
+                            <div class="col-md-3">
+                                <input class="btn btn-primary bnt-block" type="submit" value="Adicionar"
+                                       ng-click="addCategory()" ng-disabled="!categoryInput">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal subtask-->
+    <div class="modal fade" id="subTaskModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Subtarefas</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="well">
+                        <form ng-submit="addSubtask()">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="text" ng-model="subTaskInput" class="form-control"
+                                           placeholder="Digite o nome da subtarefa">
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="btn btn-primary bnt-block" type="submit" value="Adicionar"
+                                           ng-disabled="!subTaskInput">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="sidebar-nav">
+                        <ul class="list-group nav scrollable">
+                            <li class="list-group-item" ng-repeat="subTask in subTasks">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" ng-model="subTask.completed"
+                                               ng-click="completedSubTask(subTask)"/>
+                                        <span class="isDone-{{subTask.completed}}">{{subTask.title}}</span>
+                                    </label>
+                                    <div class="pull-right">
+                                        <a data-toggle="tooltip" data-placement="top" title="Excluir"
+                                           ng-click="deleteSubTask(subTask)">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+<head>
+    <meta charset="UTF-8"/>
+    <title>TaskApp</title>
+
+    <!--bootstrap and jquery-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!--angular-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular.min.js"></script>
+
+    <!--ui.router-->
+    <script src="//unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+    <script src="https://use.fontawesome.com/3962f28f8f.js"></script>
+
+    <!--local files-->
+    <link rel="stylesheet" type="text/css" href="css/app.css"/>
+    <script src="./js/app.js"></script>
+    <script src="./js/controller/todolist-controller.js"></script>
+    <script src="./js/controller/task-controller.js"></script>
+    <script src="./js/controller/all-tasks-controller.js"></script>
+    <script src="./js/controller/category-controller.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("body").tooltip({selector: '[data-toggle=tooltip]'});
+
+            $(".navbar-nav li").hover(function () {
+                $(this).toggleClass("active");
+            });
+        });
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">TaskApp</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a ui-sref="allTasks">Todas as Tarefas</a></li>
+            <li><a ui-sref="todoList">Listas de Tarefas</a></li>
+            <li><a ui-sref="category">Categorias</a></li>
+            <li><a ui-sref="contact">Contato</a></li>
+        </ul>
+    </div>
+</nav>
+<ui-view></ui-view>
+</body>
+</html>
