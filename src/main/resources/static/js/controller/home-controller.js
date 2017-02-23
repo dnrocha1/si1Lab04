@@ -40,7 +40,6 @@ angular.module('todoApp').controller("homeController", function ($scope, $http) 
 
     $scope.export = function () {
         docDefinition = {content: todoListToString()};
-        //console.log(docDefinition);
         pdfMake.createPdf(docDefinition).download(currentTodoList.title + ".pdf");
     };
 
@@ -81,7 +80,5 @@ angular.module('todoApp').controller("homeController", function ($scope, $http) 
         }
         return exit;
     };
-
-    //docDefinition = { content: todoListToString() };
 
 });
