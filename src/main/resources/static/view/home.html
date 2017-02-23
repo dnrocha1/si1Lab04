@@ -1,3 +1,20 @@
 <div>
-
+    <div id="content">
+        <h2>Página Principal</h2>
+    </div>
+    <div id="content">
+        <div class="form-group">
+            <select class="form-control" id="selectList" ng-model="todoListId" ng-change="updateId()">
+                <option value="" disabled selected>Selecionar lista de tarefas</option>
+                <option ng-repeat="todoList in allTodoLists" value="{{todoList.id}}">
+                    {{todoList.title}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="sidebar-nav" id="content">
+        <input class="btn btn-danger btn-block" type="submit" value="Exportar lista de tarefas"
+               ng-disabled="!todoListId"
+               ng-click="export()">
+    </div>
 </div>

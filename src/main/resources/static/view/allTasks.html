@@ -1,10 +1,10 @@
 <div>
     <div id="content">
-        <h2>Total de tarefas a cumprir: {{ (allTasks | filter: {completed:false}).length }}<h2>
+        <h2>Total de tarefas a cumprir: {{ (allTasks | filter: {completed:false}).length }}</h2>
     </div>
     <div id="content">
         <label style="color:white">Pesquisa:</label>
-        <input type="text" ng-model="search">
+        <input type="text" placeholder="Pesquise aqui" ng-model="search">
     </div>
     <div id="content">
         <div class="form-group">
