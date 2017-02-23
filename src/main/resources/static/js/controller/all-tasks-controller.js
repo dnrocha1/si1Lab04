@@ -8,7 +8,7 @@ angular.module('todoApp').controller("allTasksController", function ($scope, $ht
     var loadAllTasks = function () {
         $http({
             method: 'GET',
-            url: 'http://localhost:8080/tasks'
+            url: '/tasks'
         }).then(function (responseSuccess) {
             $scope.allTasks = responseSuccess.data;
         }, function (responseFail) {

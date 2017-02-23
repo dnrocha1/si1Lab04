@@ -20,7 +20,7 @@ angular.module('todoApp').controller("todoListController", function ($scope, $ht
     var saveTodoLists = function () {
         $http({
             method: 'POST',
-            url: 'https://localhost:8080/todoList',
+            url: '/todoList',
             data: $scope.todoList
         }).then(function (responseSuccess) {
             $scope.todoLists.push(responseSuccess.data);
@@ -41,7 +41,7 @@ angular.module('todoApp').controller("todoListController", function ($scope, $ht
     var loadTodoLists = function () {
         $http({
             method: 'GET',
-            url: 'https://localhost:8080/todoList'
+            url: '/todoList'
         }).then(function (responseSuccess) {
             $scope.todoLists = responseSuccess.data;
         }, function (responseFail) {
@@ -53,7 +53,7 @@ angular.module('todoApp').controller("todoListController", function ($scope, $ht
     $scope.deleteTodoList = function (todoList) {
         $http({
             method: 'DELETE',
-            url: 'https://localhost:8080/todoList/' + todoList.id
+            url: '/todoList/' + todoList.id
         }).then(function (responseSuccess) {
             var pos = $scope.todoLists.indexOf(todoList);
             $scope.todoLists.splice(pos, 1);
@@ -72,7 +72,7 @@ angular.module('todoApp').controller("todoListController", function ($scope, $ht
         $scope.todoList.title = $scope.todoListInput;
         $http({
             method: 'PUT',
-            url: 'https://localhost:8080/todoList',
+            url: '/todoList',
             data: $scope.todoList
         }).then(function (responseSuccess) {
             var pos = $scope.todoLists.indexOf(previousTodo);

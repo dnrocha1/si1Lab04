@@ -10,7 +10,7 @@ angular.module('todoApp').controller("categoryController", function ($scope, $ht
     var loadCategories = function () {
         $http({
             method: 'GET',
-            url: 'http://localhost:8080/taskcategories'
+            url: '/taskcategories'
         }).then(function (responseSuccess) {
             $scope.allCategories = responseSuccess.data;
         }, function (responseFail) {
@@ -24,7 +24,7 @@ angular.module('todoApp').controller("categoryController", function ($scope, $ht
     $scope.deleteCategory = function (category) {
         $http({
             method: 'DELETE',
-            url: 'http://localhost:8080/taskcategories/' + category.id
+            url: '/taskcategories/' + category.id
         }).then(function (responseSuccess) {
             loadCategories();
         }, function (responseFail) {
@@ -52,7 +52,7 @@ angular.module('todoApp').controller("categoryController", function ($scope, $ht
     var saveCategory = function () {
         $http({
             method: 'POST',
-            url: 'http://localhost:8080/taskcategories',
+            url: '/taskcategories',
             data: $scope.category
         }).then(function (responseSuccess) {
             loadCategories();
@@ -70,7 +70,7 @@ angular.module('todoApp').controller("categoryController", function ($scope, $ht
         $scope.category.title = $scope.categoryInput;
         $http({
             method: 'PUT',
-            url: 'http://localhost:8080/taskcategories',
+            url: '/taskcategories',
             data: $scope.category
         }).then(function (responseSuccess) {
             loadCategories();

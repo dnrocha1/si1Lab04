@@ -11,7 +11,7 @@ angular.module('todoApp').controller("homeController", function ($scope, $http) 
     var loadTodoLists = function () {
         $http({
             method: 'GET',
-            url: 'http://localhost:8080/todoList'
+            url: '/todoList'
         }).then(function (responseSuccess) {
             $scope.allTodoLists = responseSuccess.data;
         }, function (responseFail) {
@@ -24,7 +24,7 @@ angular.module('todoApp').controller("homeController", function ($scope, $http) 
     var loadTodoList = function () {
         $http({
             method: 'GET',
-            url: 'http://localhost:8080/todoList/' + $scope.todoListId
+            url: '/todoList/' + $scope.todoListId
         }).then(function (responseSuccess) {
             currentTodoList = responseSuccess.data;
         }, function (responseFail) {

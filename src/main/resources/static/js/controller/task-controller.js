@@ -20,7 +20,7 @@ angular.module('todoApp').controller("taskController", function ($scope, $http, 
     var loadTodoList = function () {
         $http({
             method: 'GET',
-            url: 'http://localhost:8080/todoList/' + todoListId
+            url: '/todoList/' + todoListId
         }).then(function (responseSuccess) {
             todoList = responseSuccess.data;
             $scope.tasks = todoList.tasks;
@@ -47,7 +47,7 @@ angular.module('todoApp').controller("taskController", function ($scope, $http, 
     var saveTask = function () {
         $http({
             method: 'POST',
-            url: 'http://localhost:8080/tasks',
+            url: '/tasks',
             data: $scope.task
         }).then(function (responseSuccess) {
             $scope.tasks.push(responseSuccess.data);
@@ -72,7 +72,7 @@ angular.module('todoApp').controller("taskController", function ($scope, $http, 
         task.subTasks = null;
         $http({
             method: 'PUT',
-            url: 'http://localhost:8080/tasks',
+            url: '/tasks',
             data: task
         }).then(function (responseSuccess) {
             loadTodoList();
@@ -85,7 +85,7 @@ angular.module('todoApp').controller("taskController", function ($scope, $http, 
     $scope.deleteTask = function (task) {
         $http({
             method: 'DELETE',
-            url: 'http://localhost:8080/tasks/' + task.id
+            url: '/tasks/' + task.id
         }).then(function (responseSuccess) {
             loadTodoList();
         }, function (responseFail) {
@@ -101,7 +101,7 @@ angular.module('todoApp').controller("taskController", function ($scope, $http, 
         $scope.task.category = {id: $scope.taskCategoryId};
         $http({
             method: 'PUT',
-            url: 'http://localhost:8080/tasks',
+            url: '/tasks',
             data: $scope.task
         }).then(function (responseSuccess) {
             loadTodoList();
@@ -148,7 +148,7 @@ angular.module('todoApp').controller("taskController", function ($scope, $http, 
     var loadSubTasks = function () {
         $http({
             method: 'GET',
-            url: 'http://localhost:8080/tasks/' + $scope.task.id
+            url: '/tasks/' + $scope.task.id
         }).then(function (responseSuccess) {
             $scope.task = responseSuccess.data;
             $scope.subTasks = $scope.task.subTasks;
@@ -170,7 +170,7 @@ angular.module('todoApp').controller("taskController", function ($scope, $http, 
     var saveSubTask = function () {
         $http({
             method: 'POST',
-            url: 'http://localhost:8080/subtasks',
+            url: '/subtasks',
             data: $scope.subTask
         }).then(function (responseSuccess) {
             $scope.subTasks.push(responseSuccess.data);
@@ -184,7 +184,7 @@ angular.module('todoApp').controller("taskController", function ($scope, $http, 
     $scope.deleteSubTask = function (subTask) {
         $http({
             method: 'DELETE',
-            url: 'http://localhost:8080/subtasks/' + subTask.id
+            url: '/subtasks/' + subTask.id
         }).then(function (responseSuccess) {
             loadSubTasks();
         }, function (responseFail) {
@@ -197,7 +197,7 @@ angular.module('todoApp').controller("taskController", function ($scope, $http, 
         subTask.task = {id: $scope.task.id};
         $http({
             method: 'PUT',
-            url: 'http://localhost:8080/subtasks',
+            url: '/subtasks',
             data: subTask
         }).then(function (responseSuccess) {
             loadTodoList();
@@ -216,7 +216,7 @@ angular.module('todoApp').controller("taskController", function ($scope, $http, 
     var saveCategory = function () {
         $http({
             method: 'PUT',
-            url: 'http://localhost:8080/taskcategories',
+            url: '/taskcategories',
             data: category
         }).then(function (responseSuccess) {
             $scope.categories.push(responseSuccess.data);
@@ -232,7 +232,7 @@ angular.module('todoApp').controller("taskController", function ($scope, $http, 
     var loadCategories = function () {
         $http({
             method: 'GET',
-            url: 'http://localhost:8080/taskcategories'
+            url: '/taskcategories'
         }).then(function (responseSuccess) {
             $scope.allCategories = responseSuccess.data;
         }, function (responseFail) {
