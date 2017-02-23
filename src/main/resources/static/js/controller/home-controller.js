@@ -27,7 +27,6 @@ angular.module('todoApp').controller("homeController", function ($scope, $http) 
             url: 'http://localhost:8080/todoList/' + $scope.todoListId
         }).then(function (responseSuccess) {
             currentTodoList = responseSuccess.data;
-            //console.log(currentTodoList);
         }, function (responseFail) {
             console.log(responseFail.data);
             console.log(responseFail.status);
